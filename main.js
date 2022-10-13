@@ -1,5 +1,6 @@
 var isFull = false
 var gamediv = undefined
+var background = undefined
 
 try {
     jQuery()
@@ -10,7 +11,7 @@ try {
     eval(xhttp.responseText);
 }
 
-function newgamebar(background) {
+function newgamebar(image) {
     // Create the gamebar
     $(".field-game").prepend(
         $("<div>").css({
@@ -29,7 +30,7 @@ function newgamebar(background) {
                 "transform": "translate(calc(-50% - 19px), 0px)"
             })
         ).append(
-            $("<p>").click(function() {togglefull(background)}).attr("class", "gamebar-toggle").css({
+            $("<p>").click(togglefull).attr("class", "gamebar-toggle").css({
                 "position": "sticky",
                 "left": "100%",
                 "cursor": "pointer"
@@ -64,10 +65,13 @@ function newgamebar(background) {
 
     // Make a copy of the gamediv
     gamediv = $(".field-game").clone()
+    
+    // Set global background varible
+    background = image
 }
 
 
-function togglefull(background) {
+function togglefull() {
     if (!isFull) {
         // Empty body and add gamediv
         $("body").empty().append(gamediv)
