@@ -1,7 +1,5 @@
 var isFull = false
 
-var $ = window.$
-
 function newgamebar(background) {
     // Create the gamebar
     $(".field-game").prepend(
