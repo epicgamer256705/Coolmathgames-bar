@@ -76,7 +76,7 @@ function newgamebar(image) {
 }
 
 function fullscreen() {
-    var iframe = $("#html5game")
+    var iframe = $("#html5game")[0]
     var iframeWidth = parseInt(iframe.width);
     var iframeHeight = parseInt(iframe.height);
     var windowWidth = parseInt($(window).width()*0.8);
