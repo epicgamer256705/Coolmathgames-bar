@@ -11,6 +11,11 @@ try {
     eval(xhttp.responseText);
 }
 
+if (window.location.host == "www.coolmathgames.com" && !window.location.pathname.endsWith("/play")) {
+} else {
+    return
+}
+
 function newgamebar(image) {
     // Create the gamebar
     $(".field-game").prepend(
