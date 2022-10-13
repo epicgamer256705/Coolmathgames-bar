@@ -1,4 +1,5 @@
 var isFull = false
+var gamediv = undefined
 
 function newgamebar(background) {
     // Create the gamebar
@@ -53,7 +54,7 @@ function newgamebar(background) {
     $(".gamebar").css("width", $("#html5game").attr("width"))
 
     // Make a copy of the gamediv
-    var gamediv = $(".field-game").clone()
+    gamediv = $(".field-game").clone()
 }
 
 
