@@ -80,7 +80,7 @@ function fullscreen() {
     var iframeWidth = parseInt(iframe.width);
     var iframeHeight = parseInt(iframe.height);
     var windowWidth = parseInt($(window).width()*0.8);
-    var windowHeight = parseInt($(window).height()*0.8-$(".gamebar").height());
+    var windowHeight = parseInt($(window).height()*0.8-$(".gamebar").prop("clientHeight"));
 
     if ($("body").hasClass("game-scalable")) {
         if (iframeHeight > windowHeight) {
