@@ -132,7 +132,7 @@ function togglemax() {
         })
 
         // Add event listener to toggle button
-        $(".gamebar-toggle").click(togglefull)
+        $(".gamebar-toggle").click(togglemax)
 
         // Change iframe1 to iframe
         try {
