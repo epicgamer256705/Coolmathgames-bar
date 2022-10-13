@@ -53,7 +53,7 @@ function newgamebar(image) {
                     })
                 )
             ).append(
-                $("<p>").attr("onclick", "togglefull()").text("test").attr("class", "gamebar-fulltoggle").css({
+                $("<p>").attr("onclick", "togglefull()").attr("class", "gamebar-fulltoggle").css({
                     "cursor": "pointer",
                     "margin-left": "8px"
                 }).append(
@@ -68,8 +68,11 @@ function newgamebar(image) {
         )
     )
     
-    // Make svg show
-    $("svg")[0].outerHTML=$("svg")[0].outerHTML+" "
+    // Make max svg show
+    $(".gamebar-toggle")[0].outerHTML += " "
+    
+    // Make full svg show
+    $(".gamebar-fulltoggle")[0].outerHTML += " "
 
     // Get the game name for the gamebar
     const arr = window.location.pathname.replace("/0-", "").replace("-", " ").split(" ");
