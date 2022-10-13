@@ -42,7 +42,7 @@ function newgamebar(image) {
                 "flex-wrap": "nowrap",
                 "left": "100%"
             }).append(
-                $("<p>").click(togglemax).attr("class", "gamebar-toggle").css({
+                $("<p>").attr("onclick", "togglemax()").attr("class", "gamebar-toggle").css({
                     "cursor": "pointer"
                 }).append(
                     $("<svg>").html(
@@ -53,7 +53,7 @@ function newgamebar(image) {
                     })
                 )
             ).append(
-                $("<p>").click(togglefull).text("test").attr("class", "gamebar-fulltoggle").css({
+                $("<p>").attr("onclick", "togglefull()").text("test").attr("class", "gamebar-fulltoggle").css({
                     "cursor": "pointer",
                     "margin-left": "8px"
                 }).append(
