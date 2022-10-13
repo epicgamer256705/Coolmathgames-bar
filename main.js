@@ -123,6 +123,9 @@ function togglefull() {
 
             // Calculating game width based on window height
             var gameWidth = iframeWidth * ratio;
+            
+            // Fullscreen website
+            document.documentElement.requestFullscreen()
 
             // Apply new width and height to iframe
             iframe.style.width = gameWidth + "px";
@@ -136,6 +139,9 @@ function togglefull() {
         // Remove fullscreen size
         iframe.style.width = "";
         iframe.style.height = "";
+        
+        // Unfullscreen website
+        document.exitFullscreen()
         
         // Set icon for full/unfull
         $(".gamebar-fulltoggle-full").css("display", "")
