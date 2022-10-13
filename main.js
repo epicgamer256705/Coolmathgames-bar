@@ -111,8 +111,8 @@ function togglefull() {
     if (!isFull) {
         var iframeWidth = parseInt(iframe.width);
         var iframeHeight = parseInt(iframe.height);
-        var windowWidth = parseInt($(window).width()*0.95);
-        var windowHeight = parseInt($(window).height()*0.95-$(".gamebar").prop("clientHeight"));
+        var windowWidth = parseInt($(window).width()*0.9);
+        var windowHeight = parseInt($(window).height()*0.9-$(".gamebar").prop("clientHeight"));
 
         if ($("body").hasClass("game-scalable")) {
             if (iframeHeight > windowHeight) {
