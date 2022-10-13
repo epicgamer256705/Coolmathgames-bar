@@ -13,7 +13,7 @@ try {
 
 if (window.location.host == "www.coolmathgames.com" && !window.location.pathname.endsWith("/play")) {
 } else {
-    return
+    throw new Error("Not on coolmathgames")
 }
 
 function newgamebar(image) {
