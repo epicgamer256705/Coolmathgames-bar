@@ -67,7 +67,7 @@ function newgamebar(image) {
     $(".field-game").css("display", "block")
     
     // Set gamebar width
-    $(".gamebar").css("width", $("#html5game").attr("width"))
+    $(".gamebar").css("width", $("#html5game").prop("clientWidth"))
 
     // Make a copy of the gamediv
     gamediv = $(".field-game").clone()
@@ -102,11 +102,11 @@ function togglefull() {
     } else {
         // Remove fullscreen size
         iframe.style.width = "";
-        iframe.style.height = "px";
+        iframe.style.height = "";
     }
     
     // Set gamebar width
-    $(".gamebar").css("width", $("#html5game").attr("width"))
+    $(".gamebar").css("width", $("#html5game").prop("clientWidth"))
     
     // Toggle isFull var
     isFull = !isFull
