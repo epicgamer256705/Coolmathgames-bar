@@ -5,6 +5,7 @@ var background = undefined
 try {
     jQuery()
 } catch {
+    delete xhttp;
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", "https://code.jquery.com/jquery-3.6.1.min.js", false);
     xhttp.send();
