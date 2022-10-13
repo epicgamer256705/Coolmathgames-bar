@@ -75,6 +75,28 @@ function newgamebar(image) {
     background = image
 }
 
+function fullscreen() {
+    var iframe = $("#html5game")
+    var iframeWidth = parseInt(iframe.width);
+    var iframeHeight = parseInt(iframe.height);
+    var windowWidth = parseInt($(window).width()*0.8);
+    var windowHeight = parseInt($(window).height()*0.8-$(".gamebar").height());
+
+    if ($("body").hasClass("game-scalable")) {
+        if (iframeHeight > windowHeight) {
+            var ratio = iframeHeight / windowHeight;
+        } else {
+            var ratio = windowHeight / iframeHeight;
+        }
+
+        // Calculating game width based on window height
+        var gameWidth = iframeWidth * ratio;
+
+        // Apply new width and height to iframe
+        iframe.style.width = gameWidth + "px";
+        iframe.style.height = windowHeight + "px";
+    }
+}
 
 function togglefull() {
     if (!isFull) {
