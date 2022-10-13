@@ -78,7 +78,9 @@ function newgamebar(image) {
     })
     
     // Make the game bigger
-    $("#html5game")[0].contentDocument.body.querySelector("canvas").style="width: 100%; height:100%;"
+    $("#html5game")[0].contentDocument.onload = function() {
+        $("#html5game")[0].contentDocument.body.querySelector("canvas").style="width: 100%; height:100%;"
+    }
 
     // Set gamebar width
     $(".gamebar").css("width", $("#html5game").attr("width"))
