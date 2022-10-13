@@ -66,7 +66,7 @@ function newgamebar(image) {
                 )
             )
         )
-    ))
+    )
 
     // Make svg show
     $("svg")[0].outerHTML=$("svg")[0].outerHTML+" "
