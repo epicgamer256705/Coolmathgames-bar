@@ -57,11 +57,19 @@ function newgamebar(image) {
                     "cursor": "pointer",
                     "margin-left": "8px"
                 }).append(
-                    $("<svg>").html(
+                    $("<svg>").attr("class", "gamebar-fulltoggle-full").html(
                         '<path fill="white" d="M512 160l-32 32-52-52L328 240l-56-56L372 84 320 32 352 0H512V160zM0 352l32-32 52 52L184 272l56 56L140 428l52 52-32 32H0V352z"></path>'
                     ).attr("viewBox", "0 0 512 512").css({
                         "width": "18px",
                         "height": "18px"
+                    })
+                ).append(
+                    $("<svg>").attr("class", "gamebar-fulltoggle-unfull").html(
+                        '<path fill="white" d="M272 80l32-32 52 52L456 0l56 56L412 156l52 52-32 32H272V80zM240 432l-32 32-52-52L56 512 0 456 100 356 48 304l32-32H240V432z"></path>'
+                    ).attr("viewBox", "0 0 512 512").css({
+                        "width": "18px",
+                        "height": "18px",
+                        "display": "none"
                     })
                 )
             )
@@ -71,7 +79,7 @@ function newgamebar(image) {
     // Make max svg show
     $(".gamebar-toggle")[0].outerHTML += " "
     
-    // Make full svg show
+    // Make full and unfull svg show
     $(".gamebar-fulltoggle")[0].outerHTML += " "
 
     // Get the game name for the gamebar
@@ -119,11 +127,19 @@ function togglefull() {
             // Apply new width and height to iframe
             iframe.style.width = gameWidth + "px";
             iframe.style.height = windowHeight + "px";
+            
+            // Set icon for full/unfull
+            $(".gamebar-fulltoggle-unfull").css("display", "")
+            $(".gamebar-fulltoggle-full").css("display", "none")
         }
     } else {
         // Remove fullscreen size
         iframe.style.width = "";
         iframe.style.height = "";
+        
+        // Set icon for full/unfull
+        $(".gamebar-fulltoggle-full").css("display", "")
+        $(".gamebar-fulltoggle-unfull").css("display", "none")
     }
     
     // Set gamebar width
