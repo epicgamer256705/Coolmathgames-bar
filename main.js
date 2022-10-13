@@ -1,4 +1,5 @@
 var isFull = false
+var isMax = false
 var gamediv = undefined
 var background = undefined
 
@@ -35,7 +36,7 @@ function newgamebar(image) {
                 "transform": "translate(calc(-50% - 19px), 0px)"
             })
         ).append(
-            $("<p>").click(togglefull).attr("class", "gamebar-toggle").css({
+            $("<p>").click(togglemax).attr("class", "gamebar-toggle").css({
                 "position": "sticky",
                 "left": "100%",
                 "cursor": "pointer"
@@ -75,31 +76,44 @@ function newgamebar(image) {
     background = image
 }
 
-function fullscreen() {
+function togglefull() {
     var iframe = $("#html5game")[0]
-    var iframeWidth = parseInt(iframe.width);
-    var iframeHeight = parseInt(iframe.height);
-    var windowWidth = parseInt($(window).width()*0.8);
-    var windowHeight = parseInt($(window).height()*0.8-$(".gamebar").prop("clientHeight"));
+    
+    if (!isFull) {
+        var iframeWidth = parseInt(iframe.width);
+        var iframeHeight = parseInt(iframe.height);
+        var windowWidth = parseInt($(window).width()*0.9);
+        var windowHeight = parseInt($(window).height()*0.9-$(".gamebar").prop("clientHeight"));
 
-    if ($("body").hasClass("game-scalable")) {
-        if (iframeHeight > windowHeight) {
-            var ratio = iframeHeight / windowHeight;
-        } else {
-            var ratio = windowHeight / iframeHeight;
+        if ($("body").hasClass("game-scalable")) {
+            if (iframeHeight > windowHeight) {
+                var ratio = iframeHeight / windowHeight;
+            } else {
+                var ratio = windowHeight / iframeHeight;
+            }
+
+            // Calculating game width based on window height
+            var gameWidth = iframeWidth * ratio;
+
+            // Apply new width and height to iframe
+            iframe.style.width = gameWidth + "px";
+            iframe.style.height = windowHeight + "px";
         }
-
-        // Calculating game width based on window height
-        var gameWidth = iframeWidth * ratio;
-
-        // Apply new width and height to iframe
-        iframe.style.width = gameWidth + "px";
-        iframe.style.height = windowHeight + "px";
+    } else {
+        // Remove fullscreen size
+        iframe.style.width = "";
+        iframe.style.height = "px";
     }
+    
+    // Set gamebar width
+    $(".gamebar").css("width", $("#html5game").attr("width"))
+    
+    // Toggle isFull var
+    isFull = !isFull
 }
 
-function togglefull() {
-    if (!isFull) {
+function togglemax() {
+    if (!isMax) {
         // Empty body and add gamediv
         $("body").empty().append(gamediv)
 
@@ -127,6 +141,6 @@ function togglefull() {
     } else {
         window.location=window.location
     }
-    // Toggle isFull var
-    isFull = !isFull
+    // Toggle isMax var
+    isMax = !isMax
 }
