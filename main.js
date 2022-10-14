@@ -113,7 +113,7 @@ function newgamebar(image) {
             margin: 0px;
             border: 0px;
         `
-    }, 100)
+    }, 300)
 
     // Make a copy of the gamediv
     gamediv = $(".field-game").clone()
