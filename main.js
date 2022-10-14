@@ -83,7 +83,7 @@ function newgamebar(image) {
     $(".gamebar-fulltoggle")[0].outerHTML += " "
 
     // Get the game name for the gamebar
-    const arr = window.location.pathname.replace("/0-", "").replace("-", " ").split(" ");
+    const arr = window.location.pathname.replace("/0-", "").replaceAll("-", " ").split(" ");
 
     for (var i = 0; i < arr.length; i++) {
         arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
