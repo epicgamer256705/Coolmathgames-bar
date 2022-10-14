@@ -101,17 +101,20 @@ function newgamebar(image) {
         "transition-timing-function": "ease-in-out"
     })
     
+    // Change iframe1 to iframe
     try {
-        // Change iframe1 to iframe
         $("iframe1")[0].outerHTML=$("iframe1")[0].outerHTML.replaceAll($("iframe1")[0].localName, "iframe")
     } catch(err) {}
     
     // Remove padding, margin and border from the game iframe
-    $("#html5game").prop("contentDocument").body.style=`
-        padding: 0px;
-        margin: 0px;
-        border: 0px;
-    `
+    document.addEventListener('click', select_element, true);
+    $("#html5game").prop("contentDocument").body.addEventListener("load", function() {
+        $("#html5game").prop("contentDocument").body.style=`
+            padding: 0px;
+            margin: 0px;
+            border: 0px;
+        `
+    })
 
     // Make a copy of the gamediv
     gamediv = $(".field-game").clone()
