@@ -107,7 +107,7 @@ function newgamebar(image) {
     } catch(err) {}
     
     // Remove padding, margin and border from the game iframe
-    $("#html5game").prop("contentDocument").body.addEventListener("load", function() {
+    $("#html5game").load(function() {
         $("#html5game").prop("contentDocument").body.style=`
             padding: 0px;
             margin: 0px;
