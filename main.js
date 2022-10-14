@@ -94,9 +94,6 @@ function newgamebar(image) {
 
     // Change gamediv display css property
     $(".field-game").css("display", "block")
-    
-    // Set gamebar width
-    $(".gamebar").css("width", $("#html5game").attr("width"))
 
     // Make a copy of the gamediv
     gamediv = $(".field-game").clone()
@@ -141,9 +138,6 @@ function togglefull() {
         $(".gamebar-fulltoggle-full").css("display", "")
         $(".gamebar-fulltoggle-unfull").css("display", "none")
     }
-    
-    // Set gamebar width
-    $(".gamebar").css("width", $("#html5game").prop("clientWidth"))
     
     // Toggle isFull var
     isFull = !isFull
