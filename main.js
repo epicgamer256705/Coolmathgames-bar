@@ -100,13 +100,6 @@ function newgamebar(image) {
         "transition-duration": "400ms",
         "transition-timing-function": "ease-in-out"
     })
-    
-    // Remove padding, margin and border from the game iframe
-    $("#html5game").prop("contentDocument").body.style=`
-        padding: 0px;
-        margin: 0px;
-        border: 0px;
-    `
 
     // Make a copy of the gamediv
     gamediv = $(".field-game").clone()
@@ -178,9 +171,16 @@ function togglemax() {
         // Add event listener to toggle button
         $(".gamebar-toggle").click(togglemax)
 
-        // Change iframe1 to iframe
         try {
+            // Change iframe1 to iframe
             $("iframe1")[0].outerHTML=$("iframe1")[0].outerHTML.replaceAll($("iframe1")[0].localName, "iframe")
+            
+            // Remove padding, margin and border from the game iframe
+            $("#html5game").prop("contentDocument").body.style=`
+                padding: 0px;
+                margin: 0px;
+                border: 0px;
+            `
         } catch(err) {}
     } else {
         window.location=window.location
