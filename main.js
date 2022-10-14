@@ -107,13 +107,13 @@ function newgamebar(image) {
     } catch(err) {}
     
     // Remove padding, margin and border from the game iframe
-    $("#html5game").load(function() {
+    setTimeout(function() {
         $("#html5game").prop("contentDocument").body.style=`
             padding: 0px;
             margin: 0px;
             border: 0px;
         `
-    })
+    }, 100)
 
     // Make a copy of the gamediv
     gamediv = $(".field-game").clone()
