@@ -94,6 +94,19 @@ function newgamebar(image) {
 
     // Change gamediv display css property
     $(".field-game").css("display", "block")
+    
+    // Modify css of game iframe
+    $("#html5game").css({
+        "transition-duration": "400ms",
+        "transition-timing-function": "ease-in-out"
+    })
+    
+    // Remove padding, margin and border from the game iframe
+    $("#html5game").prop("contentDocument").body.style=`
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
+    `
 
     // Make a copy of the gamediv
     gamediv = $(".field-game").clone()
