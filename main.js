@@ -177,18 +177,15 @@ function togglemax() {
         // Empty body and add gamediv
         $$("body")[0].innerHTML = gamediv.outerHTML
 
-        // Center the game
-        $$("body")[0].style = `
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        `
-
-        // Set background image	    
+        // Modify body css	    
         $$("body")[0].style = `
             background-image: url("` + background + `");
             background-size: cover;
             background-repeat: no-repeat;
+	    
+	    display: flex;
+            justify-content: center;
+            align-items: center;
         `
 
         // Add event listener to toggle button
