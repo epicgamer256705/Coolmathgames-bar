@@ -68,24 +68,13 @@ var isMax = false
 var gamediv = undefined
 var background = undefined
 
-try {
-    jQuery()
-} catch {
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://code.jquery.com/jquery-3.6.1.min.js", false);
-    xhttp.send();
-    eval(xhttp.responseText);
-}
-
 if (window.location.host == "www.coolmathgames.com" && !window.location.pathname.endsWith("/play")) {
 } else {
     throw new Error("Not on coolmathgames")
 }
 
-const $$ = selector => [...document.querySelectorAll(selector)]
-
 function newgamebar(image) {
-    const fieldGame = $$(".field-game")[0]
+    const fieldGame = document.querySelectorAll(".field-game")[0]
 
     // Create and add gamebar element to field-game
     var gamebarElem = document.createElement("div")
@@ -108,16 +97,18 @@ function newgamebar(image) {
     }
 
     // Set the game name for the gamebar
-    $$(".gamebar-name")[0].innerText = arr.join(" ")
+    document.querySelectorAll(".gamebar-name")[0].innerText = arr.join(" ")
     
     // Change iframe1 to iframe
     try {
-        $$("iframe1")[0].outerHTML=$$("iframe1")[0].outerHTML.replaceAll($$("iframe1")[0].localName, "iframe")
+	const gameIframe = document.querySelectorAll("iframe1")[0]
+        
+	gameIframe.outerHTML = gameIframe.outerHTML.replaceAll(gameIframe.localName, "iframe")
     } catch(err) {}
     
     // Remove padding, margin and border from the game iframe
     setTimeout(function() {
-        $$("#html5game")[0].contentDocument.body.style=`
+        document.querySelectorAll("#html5game")[0].contentDocument.body.style=`
             padding: 0px;
             margin: 0px;
             border: 0px;
@@ -125,22 +116,26 @@ function newgamebar(image) {
     }, 300)
 
     // Make a copy of the gamediv
-    gamediv = $$(".field-game")[0]
+    gamediv = fieldGame
     
     // Set global background varible
     background = image
 }
 
 function togglefull() {
-    var iframe = $$("#html5game")[0]
+    var iframe = document.querySelectorAll("#html5game")[0]
+    var gamebar = document.querySelectorAll(".gamebar")[0]
+    
+    var gamebarUnfull = document.querySelectorAll(".gamebar-fulltoggle-unfull")[0]
+    var gamebarFull = document.querySelectorAll(".gamebar-fulltoggle-full")[0]
     
     if (!isFull) {
         var iframeWidth = parseInt(iframe.width);
         var iframeHeight = parseInt(iframe.height);
-        var windowWidth = parseInt(window.innerHeight*0.9);
-        var windowHeight = parseInt(window.innerWidth*0.9-$$(".gamebar")[0].clientHeight);
+        var windowWidth = parseInt(document.body.clientHeight*0.9);
+        var windowHeight = parseInt(document.body.clientWidth*0.9 - gamebar.clientHeight);
 
-        if ($$("body")[0].classList.contains("game-scalable")) {
+        if (document.body.classList.contains("game-scalable")) {
             if (iframeHeight > windowHeight) {
                 var ratio = iframeHeight / windowHeight;
             } else {
@@ -155,8 +150,8 @@ function togglefull() {
             iframe.style.height = windowHeight + "px";
             
             // Set icon for full/unfull
-            $$(".gamebar-fulltoggle-unfull")[0].style.display = ""
-            $$(".gamebar-fulltoggle-full")[0].style.display = "none"
+            gamebarUnfull.style.display = ""
+            gamebarFull.style.display = "none"
         }
     } else {
         // Remove fullscreen size
@@ -164,21 +159,21 @@ function togglefull() {
         iframe.style.height = "";
         
         // Set icon for full/unfull
-        $$(".gamebar-fulltoggle-full")[0].style.display = ""
-        $$(".gamebar-fulltoggle-unfull")[0].style.display = "none"
+        gamebarFull.style.display = ""
+        gamebarUnfull.style.display = "none"
     }
     
     // Toggle isFull var
     isFull = !isFull
 }
 
-function togglemax() {
+function togglemax() {	
     if (!isMax) {
         // Empty body and add gamediv
-        $$("body")[0].innerHTML = gamediv.outerHTML
+        document.body.innerHTML = gamediv.outerHTML
 
         // Modify body css	    
-        $$("body")[0].style = `
+        document.body.style = `
             background-image: url("` + background + `");
             background-size: cover;
             background-repeat: no-repeat;
@@ -187,9 +182,6 @@ function togglemax() {
             justify-content: center;
             align-items: center;
         `
-
-        // Add event listener to toggle button
-        $$(".gamebar-toggle")[0].onclick = "togglemax()"
     } else {
         window.location = window.location
     }
