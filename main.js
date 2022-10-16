@@ -34,7 +34,7 @@ const cssCode = `
 }
 
 .field-game {
-    display: block;
+    display: block !important;
 }
 
 #html5game {
