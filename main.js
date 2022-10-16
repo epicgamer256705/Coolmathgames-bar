@@ -1,8 +1,3 @@
-var isFull = false
-var isMax = false
-var gamediv = undefined
-var background = undefined
-
 const cssCode = `
 .gamebar {
     background-color: rgb(42, 42, 42);
@@ -68,6 +63,11 @@ const gamebarInnerHtmlCode = `
 </div>
 `
 
+var isFull = false
+var isMax = false
+var gamediv = undefined
+var background = undefined
+
 try {
     jQuery()
 } catch {
@@ -82,8 +82,10 @@ if (window.location.host == "www.coolmathgames.com" && !window.location.pathname
     throw new Error("Not on coolmathgames")
 }
 
+const $$ = selector => [...document.querySelectorAll(selector)]
+
 function newgamebar(image) {
-    const fieldGame = document.querySelectorAll(".field-game")[0]
+    const fieldGame = $$(".field-game")[0]
 
     // Create and add gamebar element to field-game
     var gamebarElem = document.createElement("div")
@@ -97,12 +99,6 @@ function newgamebar(image) {
     cssElem.innerHTML = cssCode
     
     fieldGame.appendChild(cssElem)
-    
-//     // Make max svg show
-//     $(".gamebar-toggle")[0].outerHTML += " "
-    
-//     // Make full and unfull svg show
-//     $(".gamebar-fulltoggle")[0].outerHTML += " "
 
     // Get the game name for the gamebar
     const arr = window.location.pathname.replace("/0-", "").replaceAll("-", " ").split(" ");
@@ -112,16 +108,16 @@ function newgamebar(image) {
     }
 
     // Set the game name for the gamebar
-    $(".gamebar-name").text(arr.join(" "))
+    $$(".gamebar-name")[0].innerText = arr.join(" ")
     
     // Change iframe1 to iframe
     try {
-        $("iframe1")[0].outerHTML=$("iframe1")[0].outerHTML.replaceAll($("iframe1")[0].localName, "iframe")
+        $$("iframe1")[0].outerHTML=$$("iframe1")[0].outerHTML.replaceAll($$("iframe1")[0].localName, "iframe")
     } catch(err) {}
     
     // Remove padding, margin and border from the game iframe
     setTimeout(function() {
-        $("#html5game").prop("contentDocument").body.style=`
+        $$("#html5game")[0].contentDocument.body.style=`
             padding: 0px;
             margin: 0px;
             border: 0px;
@@ -129,22 +125,22 @@ function newgamebar(image) {
     }, 300)
 
     // Make a copy of the gamediv
-    gamediv = $(".field-game").clone()
+    gamediv = $$(".field-game")[0]
     
     // Set global background varible
     background = image
 }
 
 function togglefull() {
-    var iframe = $("#html5game")[0]
+    var iframe = $$("#html5game")[0]
     
     if (!isFull) {
         var iframeWidth = parseInt(iframe.width);
         var iframeHeight = parseInt(iframe.height);
-        var windowWidth = parseInt($(window).width()*0.9);
-        var windowHeight = parseInt($(window).height()*0.9-$(".gamebar").prop("clientHeight"));
+        var windowWidth = parseInt(window.innerHeight*0.9);
+        var windowHeight = parseInt(window.innerWidth*0.9-$$(".gamebar")[0].clientHeight);
 
-        if ($("body").hasClass("game-scalable")) {
+        if ($$("body")[0].classList.contains("game-scalable")) {
             if (iframeHeight > windowHeight) {
                 var ratio = iframeHeight / windowHeight;
             } else {
@@ -159,8 +155,8 @@ function togglefull() {
             iframe.style.height = windowHeight + "px";
             
             // Set icon for full/unfull
-            $(".gamebar-fulltoggle-unfull").css("display", "")
-            $(".gamebar-fulltoggle-full").css("display", "none")
+            $$(".gamebar-fulltoggle-unfull")[0].style.display = ""
+            $$(".gamebar-fulltoggle-full")[0].style.display = "none"
         }
     } else {
         // Remove fullscreen size
@@ -168,8 +164,8 @@ function togglefull() {
         iframe.style.height = "";
         
         // Set icon for full/unfull
-        $(".gamebar-fulltoggle-full").css("display", "")
-        $(".gamebar-fulltoggle-unfull").css("display", "none")
+        $$(".gamebar-fulltoggle-full")[0].style.display = ""
+        $$(".gamebar-fulltoggle-unfull")[0].style.display = "none"
     }
     
     // Toggle isFull var
@@ -179,26 +175,26 @@ function togglefull() {
 function togglemax() {
     if (!isMax) {
         // Empty body and add gamediv
-        $("body").empty().append(gamediv)
+        $$("body")[0].innerHTML = gamediv.outerHTML
 
         // Center the game
-        $("body").css({
-            "display": "flex",
-            "justify-content": "center",
-            "align-items": "center"
-        })
+        $$("body")[0].style = `
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `
 
-        // Set background image
-        $("body").css({
-            "background-image": "url(" + background + ")",
-            "background-size": "cover",
-            "background-repeat": "no-repeat"
-        })
+        // Set background image	    
+        $$("body")[0].style = `
+            background-image: url("` + background + `");
+            background-size: cover;
+            background-repeat: no-repeat;
+        `
 
         // Add event listener to toggle button
-        $(".gamebar-toggle").click(togglemax)
+        $$(".gamebar-toggle")[0].onclick = "togglemax()"
     } else {
-        window.location=window.location
+        window.location = window.location
     }
     // Toggle isMax var
     isMax = !isMax
