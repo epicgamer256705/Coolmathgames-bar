@@ -9,7 +9,9 @@ const cssCode = `
 }
 
 .gamebar-name {
-    margin-left: auto;
+    position: absolute;
+    left: 50%;
+    translate: -50%;
 }
 
 .gamebar-right {
@@ -50,7 +52,7 @@ const cssCode = `
     border: 0px;
     outline: 0px;
     font-size: 15px;
-    width: 150px;
+    width: 100px;
     padding: 3px;
     background: transparent;
     color: white;
@@ -60,14 +62,14 @@ const cssCode = `
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    position: relative;
+    position: absolute;
     font-size: 15px;
     font-family: 'Proxima-Soft-Regular';
     background-color: rgb(42, 42, 42);
     border-radius: 0px 0px 5px 5px;
     padding: 4px;
     padding-bottom: 0px;
-    width: 150px;
+    width: 162px;
 }
 
 .gamebar-search-results > a {
