@@ -41,12 +41,49 @@ const cssCode = `
     transition-duration: 400ms;
     transition-timing-function: ease-in-out;
 }
+
+.gamebar-search-div {
+    margin-top: -4px;
+}
+
+.gamebar-search-input {
+    border: 0px;
+    outline: 0px;
+    font-size: 15px;
+    width: 150px;
+    padding: 3px;
+    background: transparent;
+    color: white;
+}
+
+.gamebar-search-results {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    font-size: 15px;
+    font-family: 'Proxima-Soft-Regular';
+    background-color: rgb(42, 42, 42);
+    border-radius: 0px 0px 5px 5px;
+    padding: 4px;
+    padding-bottom: 0px;
+    width: 150px;
+}
+
+.gamebar-search-results > a {
+    text-decoration: none;
+    color: white;
+}
 `
 
 const gamebarInnerHtmlCode = `
 <img src="https://www.coolmathgames.com/pwa/images/icon-128x128.png">
 <p class="gamebar-name">GAME NAME</p>
 <div class="gamebar-right">
+	<div class="gamebar-search-div">
+		<input class="gamebar-search-input" oninput="onsearchbarchange()" placeholder="Search">
+		<div class="gamebar-search-results"></div>
+	</div>
 	<p onclick="togglemax()" class="gamebar-toggle">
 		<svg viewBox="0 0 448 512">
 			<path fill="white" d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"></path>
@@ -67,6 +104,14 @@ var isFull = false
 var isMax = false
 var gamediv = undefined
 var background = undefined
+
+var gamesJson = "https://www.coolmathgames.com/sites/default/files/cmatgame_games_with_levels.json";
+
+var gamesJsonRequest = new XMLHttpRequest();
+gamesJsonRequest.open("GET", gamesJson, false);
+gamesJsonRequest.send();
+
+var games = JSON.parse(gamesJsonRequest.responseText);
 
 if (window.location.host == "www.coolmathgames.com" && !window.location.pathname.endsWith("/play")) {
 } else {
@@ -188,3 +233,33 @@ function togglemax() {
     // Toggle isMax var
     isMax = !isMax
 }
+
+function onsearchbarchange() {
+    let results = searchForGames(document.querySelectorAll(".gamebar-search-input")[0].value)
+    
+    let i = 0
+    document.querySelectorAll(".gamebar-search-results")[0].innerText = ""
+    results.forEach(e => {
+        if (i > 10) {
+            return
+        }
+	    
+        document.querySelectorAll(".gamebar-search-results")[0].innerHTML += "<a href=" + "https://www.coolmathgames.com" + e.alias + ">" + e.title + "</a>" + "<br>"
+        i += 1
+    })
+}
+
+function searchForGames(name) {
+    if (games !== undefined && games.length > 1) {
+        let regex = new RegExp(name, "i");
+        let gamesFound = games.filter(game => {
+            return regex.test(game.title);
+        });
+
+        if (gamesFound.length === games.length) {
+            return [];
+        };
+        
+        return gamesFound;
+    };
+};
