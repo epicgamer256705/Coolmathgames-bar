@@ -87,7 +87,7 @@ function newgamebar(image) {
     
     // Add css element to field-game
     var cssElem = document.createElement("style")
-    cssElem.innerText = cssCode
+    cssElem.innerHTML = cssCode
     
     document.querySelectorAll(".field-game")[0].appendChild(cssElem)
     
