@@ -73,6 +73,7 @@ const cssCode = `
 }
 
 .gamebar-search-results > a {
+    cursor: pointer;
     text-decoration: none;
     color: white;
 }
@@ -236,17 +237,35 @@ function togglemax() {
     isMax = !isMax
 }
 
+function onsearchitemclick(elem) {
+    changegame(elem.getAttribute("data-url"))
+
+    document.querySelectorAll(".gamebar-search-input")[0].value = ""
+
+    document.querySelectorAll(".gamebar-search-results")[0].innerText = ""
+}
+
 function onsearchbarchange() {
     let results = searchForGames(document.querySelectorAll(".gamebar-search-input")[0].value)
+    let searchResultsDiv = document.querySelectorAll(".gamebar-search-results")[0]
     
     let i = 0
-    document.querySelectorAll(".gamebar-search-results")[0].innerText = ""
+    searchResultsDiv.innerText = ""
     results.forEach(e => {
         if (i > 10) {
             return
         }
-	    
-        document.querySelectorAll(".gamebar-search-results")[0].innerHTML += "<a href=" + "https://www.coolmathgames.com" + e.alias + ">" + e.title + "</a>" + "<br>"
+
+	let linkElem = document.createElement("a")
+
+        linkElem.innerHTML = e.title
+	linkElem.setAttribute("data-url", e.alias)
+	linkElem.setAttribute("onclick", "onsearchitemclick(this)")
+
+	searchResultsDiv.appendChild(linkElem)
+
+        searchResultsDiv.innerHTML += "<br>"
+
         i += 1
     })
 }
@@ -265,3 +284,22 @@ function searchForGames(name) {
         return gamesFound;
     };
 };
+
+function changegame(url) {
+    let arr = url.replace("/0-", "").replaceAll("-", " ").split(" ");
+
+    for (var i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+    }
+
+    document.querySelectorAll(".gamebar-name")[0].innerText = arr.join(" ")
+
+    document.querySelectorAll("#html5game")[0].src = "https://www.coolmathgames.com" + url + "/play"
+
+    document.querySelectorAll("title")[0].text = arr.join(" ") + " - Play it Online at Coolmath Games"
+
+    history.pushState({
+        id: url.replace("/0-", ""),
+        source: "web"
+    }, arr.join(), "https://www.coolmathgames.com" + url)
+}
