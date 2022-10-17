@@ -1,17 +1,22 @@
 const cssCode = `
 .gamebar {
     background-color: rgb(42, 42, 42);
-    height: 35px;
-    font-family: Proxima-Soft-Bold;
-    font-size: 20px;
-    padding: 8px;
+    height: 1em;
     display: flex;
+}
+
+.gamebar > img {
+    height: 1em;
+    padding: 0.15em;
 }
 
 .gamebar-name {
     position: absolute;
     left: 50%;
     translate: -50%;
+    line-height: 1em;
+    font-size: 0.85em;
+    padding: 0.1em;
 }
 
 .gamebar-right {
@@ -26,17 +31,37 @@ const cssCode = `
 }
 
 .gamebar-toggle > svg {
-    width: 20px;
-    height: 20px;
+    height: 1em;
+    width: 1em;
+    padding: 0.15em;
 }
 
 .gamebar-fulltoggle > svg {
-    width: 18px;
-    height: 18px;
+    height: 1em;
+    width: 1em;
+    padding: 0.15em;
+}
+
+.gamebar-fulltoggle[data-icon="full"] .gamebar-fulltoggle-full {
+    display: block;
+}
+
+.gamebar-fulltoggle[data-icon="full"] .gamebar-fulltoggle-unfull {
+    display: none;
+}
+
+.gamebar-fulltoggle[data-icon="unfull"] .gamebar-fulltoggle-unfull {
+    display: block;
+}
+
+.gamebar-fulltoggle[data-icon="unfull"] .gamebar-fulltoggle-full {
+    display: none;
 }
 
 .field-game {
     display: block !important;
+    font-family: Proxima-Soft-Bold;
+    font-size: 30px;
 }
 
 #html5game {
@@ -45,13 +70,13 @@ const cssCode = `
 }
 
 .gamebar-search-div {
-    margin-top: -4px;
+    margin-top: -0.25em;
 }
 
 .gamebar-search-input {
     border: 0px;
     outline: 0px;
-    font-size: 15px;
+    font-size: 0.5em;
     width: 100px;
     padding: 3px;
     background: transparent;
@@ -59,17 +84,18 @@ const cssCode = `
 }
 
 .gamebar-search-results {
+    margin-top: -0.25em;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     position: absolute;
-    font-size: 15px;
+    font-size: 0.5em;
     font-family: 'Proxima-Soft-Regular';
     background-color: rgb(42, 42, 42);
     border-radius: 0px 0px 5px 5px;
     padding: 4px;
     padding-bottom: 0px;
-    width: 162px;
+    width: calc(100px + 4em + 8px + 8px);
 }
 
 .gamebar-search-results > a {
@@ -92,11 +118,11 @@ const gamebarInnerHtmlCode = `
 			<path fill="white" d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"></path>
 		</svg>
 	</p>
-	<p onclick="togglefull()" class="gamebar-fulltoggle">
+	<p onclick="togglefull()" class="gamebar-fulltoggle" data-icon="full">
 		<svg class="gamebar-fulltoggle-full" viewBox="0 0 512 512">
 			<path fill="white" d="M512 160l-32 32-52-52L328 240l-56-56L372 84 320 32 352 0H512V160zM0 352l32-32 52 52L184 272l56 56L140 428l52 52-32 32H0V352z"></path>
 		</svg>
-		<svg class="gamebar-fulltoggle-unfull" viewBox="0 0 512 512" style="display: none;">
+		<svg class="gamebar-fulltoggle-unfull" viewBox="0 0 512 512">
 			<path fill="white" d="M272 80l32-32 52 52L456 0l56 56L412 156l52 52-32 32H272V80zM240 432l-32 32-52-52L56 512 0 456 100 356 48 304l32-32H240V432z"></path>
 		</svg>
 	</p>
@@ -174,8 +200,7 @@ function togglefull() {
     var iframe = document.querySelectorAll("#html5game")[0]
     var gamebar = document.querySelectorAll(".gamebar")[0]
     
-    var gamebarUnfull = document.querySelectorAll(".gamebar-fulltoggle-unfull")[0]
-    var gamebarFull = document.querySelectorAll(".gamebar-fulltoggle-full")[0]
+    var gamebarFullToggle = document.querySelectorAll(".gamebar-fulltoggle")[0]
     
     if (!isFull) {
         var iframeWidth = parseInt(iframe.width);
@@ -197,18 +222,16 @@ function togglefull() {
             iframe.style.width = gameWidth + "px";
             iframe.style.height = windowHeight + "px";
             
-            // Set icon for full/unfull
-            gamebarUnfull.style.display = ""
-            gamebarFull.style.display = "none"
+            // Change icon for unfull
+            gamebarFullToggle.setAttribute("data-icon", "unfull")
         }
     } else {
         // Remove fullscreen size
         iframe.style.width = "";
         iframe.style.height = "";
         
-        // Set icon for full/unfull
-        gamebarFull.style.display = ""
-        gamebarUnfull.style.display = "none"
+        // Set icon for full
+        gamebarFullToggle.setAttribute("data-icon", "full")
     }
     
     // Toggle isFull var
