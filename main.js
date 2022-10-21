@@ -345,6 +345,9 @@ function changegame(url) {
 
 	    document.body.classList = htmlDoc.body.classList
         });
+	
+    isFull = true;
+    togglefull();
 
     history.pushState({
         id: url.replace("/0-", ""),
