@@ -22,7 +22,6 @@ const cssCode = `
 .gamebar-right {
     display: flex;
     flex-wrap: nowrap;
-    gap: 8px;
     margin-left: auto;
 }
 
@@ -62,6 +61,7 @@ const cssCode = `
     display: block !important;
     font-family: Proxima-Soft-Bold;
     font-size: 30px;
+    margin: 0px;
 }
 
 #html5game {
@@ -77,7 +77,7 @@ const cssCode = `
     border: 0px;
     outline: 0px;
     font-size: 0.5em;
-    width: 100px;
+    width: 80px;
     padding: 3px;
     background: transparent;
     color: white;
@@ -95,7 +95,7 @@ const cssCode = `
     border-radius: 0px 0px 5px 5px;
     padding: 4px;
     padding-bottom: 0px;
-    width: calc(100px + 4em + 8px + 8px);
+    width: calc(80px + 4em);
 }
 
 .gamebar-search-results > a {
@@ -126,6 +126,7 @@ const gamebarInnerHtmlCode = `
 			<path fill="white" d="M272 80l32-32 52 52L456 0l56 56L412 156l52 52-32 32H272V80zM240 432l-32 32-52-52L56 512 0 456 100 356 48 304l32-32H240V432z"></path>
 		</svg>
 	</p>
+	<p onclick="randomgame()">random</p>
 </div>
 `
 
@@ -321,8 +322,28 @@ function changegame(url) {
 
     document.querySelectorAll("title")[0].text = arr.join(" ") + " - Play it Online at Coolmath Games"
 
+    var widthAndHeightOfGame = fetch("https://www.coolmathgames.com" + url)
+        .then(res => res.text())
+        .then(data => {
+            var htmlDoc = new DOMParser().parseFromString(data, 'text/html');
+        
+            var width = htmlDoc.querySelectorAll("#html5game")[0].getAttribute("width")
+            var height = htmlDoc.querySelectorAll("#html5game")[0].getAttribute("height")
+
+            document.querySelectorAll("#html5game")[0].width = width
+            document.querySelectorAll("#html5game")[0].height = height
+
+	    document.body.classList = htmlDoc.body.classList
+        });
+
     history.pushState({
         id: url.replace("/0-", ""),
         source: "web"
     }, arr.join(), "https://www.coolmathgames.com" + url)
+}
+
+function randomgame() {
+    var game = games[Math.floor(Math.random() * (games.length - 1))]
+    if (game.type != "html5") return
+    changegame(game.alias)
 }
