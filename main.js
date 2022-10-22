@@ -1,21 +1,30 @@
 const cssCode = `
 .gamebar {
     background-color: rgb(42, 42, 42);
-    height: 1em;
     display: flex;
+    height: 1.1em;
+    padding: 0.05em;
+}
+
+.gamebar[data-max="true"] {
+    position: absolute;
+    top: 0.25vw;
+    left: 50%;
+    width: 99.5vw;
+    translate: -50%;
 }
 
 .gamebar > img {
     height: 1em;
-    padding: 0.15em;
+    padding: 0.1em;
 }
 
 .gamebar-name {
     position: absolute;
     left: 50%;
     translate: -50%;
-    line-height: 1em;
-    font-size: 0.85em;
+    line-height: 0.7em;
+    font-size: 1em;
     padding: 0.1em;
 }
 
@@ -66,7 +75,7 @@ const cssCode = `
 .field-game {
     display: block !important;
     font-family: Proxima-Soft-Bold;
-    font-size: 30px;
+    font-size: 25px;
     margin: 0px;
 }
 
@@ -143,7 +152,7 @@ const gamebarInnerHtmlCode = `
 var isFull = false
 var isMax = false
 var gamediv = undefined
-var background = undefined
+var background = "https://wallpaperaccess.com/full/2091281.jpg"
 
 var gamesJson = "https://www.coolmathgames.com/sites/default/files/cmatgame_games_with_levels.json";
 
@@ -165,6 +174,7 @@ function newgamebar(image) {
     var gamebarElem = document.createElement("div")
     gamebarElem.className = "gamebar"
     gamebarElem.innerHTML = gamebarInnerHtmlCode
+    gamebarElem.setAttribute("data-max", "false")
     
     fieldGame.prepend(gamebarElem)
     
@@ -204,7 +214,9 @@ function newgamebar(image) {
     gamediv = fieldGame
     
     // Set global background varible
-    background = image
+    if (image != undefined) {
+        background = image
+    }
 }
 
 function togglefull() {
@@ -264,6 +276,9 @@ function togglemax() {
             justify-content: center;
             align-items: center;
         `
+	
+	// Set data-max attribute on gamebar
+	document.querySelectorAll(".gamebar")[0].setAttribute("data-max", "true")
     } else {
         window.location = window.location
     }
