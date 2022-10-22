@@ -76,6 +76,7 @@ const cssCode = `
     font-family: Proxima-Soft-Bold;
     font-size: 25px;
     margin: 0px;
+    margin-top: 1.1em;
 }
 
 #html5game {
