@@ -8,10 +8,9 @@ const cssCode = `
 
 .gamebar[data-max="true"] {
     position: absolute;
-    top: 0.25vw;
-    left: 50%;
-    width: 99.5vw;
-    translate: -50%;
+    top: 0%;
+    left: 0%;
+    width: 100vw;
 }
 
 .gamebar > img {
@@ -211,7 +210,7 @@ function newgamebar(image) {
     }, 300)
 
     // Make a copy of the gamediv
-    gamediv = fieldGame
+    gamediv = document.querySelectorAll(".field-game")[0].outerHTML
     
     // Set global background varible
     if (image != undefined) {
@@ -264,7 +263,7 @@ function togglefull() {
 function togglemax() {	
     if (!isMax) {
         // Empty body and add gamediv
-        document.body.innerHTML = gamediv.outerHTML
+        document.body.innerHTML = gamediv
 
         // Modify body css	    
         document.body.style = `
@@ -287,11 +286,11 @@ function togglemax() {
 }
 
 function onsearchitemclick(elem) {
-    changegame(elem.getAttribute("data-url"))
-
     document.querySelectorAll(".gamebar-search-input")[0].value = ""
 
     document.querySelectorAll(".gamebar-search-results")[0].innerText = ""
+
+    changegame(elem.getAttribute("data-url"))
 }
 
 function onsearchbarchange() {
@@ -305,17 +304,20 @@ function onsearchbarchange() {
             return
         }
 
-	let linkElem = document.createElement("a")
+	if (e.type === "html5") {
 
-        linkElem.innerHTML = e.title
-	linkElem.setAttribute("data-url", e.alias)
-	linkElem.setAttribute("onclick", "onsearchitemclick(this)")
+	    let linkElem = document.createElement("a")
 
-	searchResultsDiv.appendChild(linkElem)
+	    linkElem.innerHTML = e.title
+	    linkElem.setAttribute("data-url", e.alias)
+	    linkElem.setAttribute("onclick", "onsearchitemclick(this)")
 
-        searchResultsDiv.innerHTML += "<br>"
+	    searchResultsDiv.appendChild(linkElem)
 
-        i += 1
+	    searchResultsDiv.innerHTML += "<br>"
+
+	    i += 1
+	}
     })
 }
 
@@ -343,11 +345,7 @@ function changegame(url) {
 
     document.querySelectorAll(".gamebar-name")[0].innerText = arr.join(" ")
 
-    document.querySelectorAll("#html5game")[0].src = "https://www.coolmathgames.com" + url + "/play"
-
-    document.querySelectorAll("title")[0].text = arr.join(" ") + " - Play it Online at Coolmath Games"
-
-    var widthAndHeightOfGame = fetch("https://www.coolmathgames.com" + url)
+    fetch("https://www.coolmathgames.com" + url)
         .then(res => res.text())
         .then(data => {
             var htmlDoc = new DOMParser().parseFromString(data, 'text/html');
@@ -359,6 +357,12 @@ function changegame(url) {
             document.querySelectorAll("#html5game")[0].height = height
 
 	    document.body.classList = htmlDoc.body.classList
+
+	    document.querySelectorAll("title")[0].text = htmlDoc.querySelectorAll("title")[0].text
+
+            document.querySelectorAll("#html5game")[0].src = htmlDoc.querySelectorAll("#html5game")[0].getAttribute("src")
+	    
+	    gamediv = document.querySelectorAll(".field-game")[0].outerHTML
         });
 	
     isFull = true;
