@@ -232,7 +232,7 @@ function togglefull() {
         var windowWidth = parseInt(document.body.clientWidth*0.9);
         var windowHeight = parseInt(document.body.clientHeight*0.9-gamebar.clientHeight);
 
-        if (document.body.classList.contains("game-scalable")) {
+        if (document.body.classList.contains("game-scalable") || document.body.classList.contains("game-full-screen")) {
             if (iframeHeight > windowHeight) {
                 var ratio = iframeHeight / windowHeight;
             } else {
