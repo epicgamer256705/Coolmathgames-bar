@@ -110,7 +110,7 @@ const cssCode = `
     border-radius: 0px 0px 5px 5px;
     padding: 4px;
     padding-bottom: 0px;
-    width: calc(80px + 6em);
+    width: calc(80px + 6em + 0.1em);
 }
 
 .gamebar-search-results > a {
