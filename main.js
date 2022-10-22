@@ -219,6 +219,8 @@ function newgamebar(image) {
 }
 
 function togglefull() {
+    if (!isMax) return
+
     var iframe = document.querySelectorAll("#html5game")[0]
     var gamebar = document.querySelectorAll(".gamebar")[0]
     
@@ -278,6 +280,13 @@ function togglemax() {
 	
 	// Set data-max attribute on gamebar
 	document.querySelectorAll(".gamebar")[0].setAttribute("data-max", "true")
+	    
+	window.addEventListener("resize", () => {
+	    if (isFull) {
+		isFull = false
+		togglefull()
+	    }
+	});
     } else {
         window.location = window.location
     }
